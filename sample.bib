@@ -8,11 +8,155 @@
 % Other papers
 % The following entries are HTML pages.
 % HTML pages
-@inproceedings{Kipf:17,
-  title={Semi-Supervised Classification with Graph Convolutional Networks},
-  author={Kipf, Thomas N. and Welling, Max},
-  booktitle={International Conference on Learning Representations (ICLR)},
-  year={2017}, 
-  url= {https://arxiv.org/pdf/1609.02907.pdf},
-  section={Introduction;RELATED WORK;GRAPH-BASED SEMI-SUPERVISED LEARNING;NEURAL NETWORKS ON GRAPHS}
+
+%%%%% MAIN PAPERS %%%%%%
+@inproceedings{conf/icml/LeM14,
+  added-at = {2014-11-07T00:00:00.000+0100},
+  author = {Le, Quoc V. and Mikolov, Tomas},
+  biburl = {https://www.bibsonomy.org/bibtex/20a3d841e4619f57bb7aea3e8d0c5f827/dblp},
+  booktitle = {ICML},
+  crossref = {conf/icml/2014},
+  ee = {http://jmlr.org/proceedings/papers/v32/le14.html},
+  interhash = {8dfe5d45e8d4b9c4812fd5590fbadeff},
+  intrahash = {0a3d841e4619f57bb7aea3e8d0c5f827},
+  keywords = {dblp},
+  pages = {1188-1196},
+  publisher = {JMLR.org},
+  series = {JMLR Workshop and Conference Proceedings},
+  timestamp = {2016-07-13T11:44:02.000+0200},
+  title = {Distributed Representations of Sentences and Documents},
+  url = {http://dblp.uni-trier.de/db/conf/icml/icml2014.html#LeM14},
+  volume = 32,
+  year = 2014
 }
+
+@inproceedings{
+logeswaran2018an,
+title={An efficient framework for learning sentence representations},
+author={Lajanugen Logeswaran and Honglak Lee},
+booktitle={International Conference on Learning Representations},
+year={2018},
+url={https://openreview.net/forum?id=rJvJXZb0W},
+}
+
+@article{DBLP:journals/corr/KirosZSZTUF15,
+  author    = {Ryan Kiros and
+               Yukun Zhu and
+               Ruslan Salakhutdinov and
+               Richard S. Zemel and
+               Antonio Torralba and
+               Raquel Urtasun and
+               Sanja Fidler},
+  title     = {Skip-Thought Vectors},
+  journal   = {CoRR},
+  volume    = {abs/1506.06726},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1506.06726},
+  archivePrefix = {arXiv},
+  eprint    = {1506.06726},
+  timestamp = {Mon, 13 Aug 2018 16:48:27 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/KirosZSZTUF15},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{use,
+  author    = {Daniel Cer and
+               Yinfei Yang and
+               Sheng{-}yi Kong and
+               Nan Hua and
+               Nicole Limtiaco and
+               Rhomni St. John and
+               Noah Constant and
+               Mario Guajardo{-}Cespedes and
+               Steve Yuan and
+               Chris Tar and
+               Yun{-}Hsuan Sung and
+               Brian Strope and
+               Ray Kurzweil},
+  title     = {Universal Sentence Encoder},
+  journal   = {CoRR},
+  volume    = {abs/1803.11175},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1803.11175},
+  archivePrefix = {arXiv},
+  eprint    = {1803.11175},
+  timestamp = {Mon, 13 Aug 2018 16:46:40 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/abs-1803-11175},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+%%%%% BACKGROUND PAPERS %%%%%
+
+%word2vec
+@incollection{word2vec,
+title = {Distributed Representations of Words and Phrases and their Compositionality},
+author = {Mikolov, Tomas and Sutskever, Ilya and Chen, Kai and Corrado, Greg S and Dean, Jeff},
+booktitle = {Advances in Neural Information Processing Systems 26},
+editor = {C. J. C. Burges and L. Bottou and M. Welling and Z. Ghahramani and K. Q. Weinberger},
+pages = {3111--3119},
+year = {2013},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf}
+}
+
+%gloVe
+@inproceedings{glove,
+  added-at = {2016-02-18T12:02:38.000+0100},
+  author = {Pennington, Jeffrey and Socher, Richard and Manning, Christopher D},
+  biburl = {https://www.bibsonomy.org/bibtex/2a6e77a38c13e374ab250e13ae22993ec/thoni},
+  booktitle = {EMNLP},
+  interhash = {29813227df1eea94efa14c7df2b5553a},
+  intrahash = {a6e77a38c13e374ab250e13ae22993ec},
+  keywords = {deeplearning deepwiki glove semantic},
+  pages = {1532--1543},
+  timestamp = {2016-09-06T08:23:07.000+0200},
+  title = {Glove: Global Vectors for Word Representation.},
+  volume = 14,
+  year = 2014
+}
+
+%gated recurrent units
+@INPROCEEDINGS{gru,
+     author = {Cho, Kyunghyun and van Merri{\"{e}}nboer, Bart and G{\"{u}}l{\c c}ehre, {\c C}ağlar and Bahdanau, Dzmitry and Bougares, Fethi and Schwenk, Holger and Bengio, Yoshua},
+      month = oct,
+      title = {Learning Phrase Representations using RNN Encoder--Decoder for Statistical Machine Translation},
+  booktitle = {Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP)},
+       year = {2014},
+      pages = {1724--1734},
+  publisher = {Association for Computational Linguistics},
+    address = {Doha, Qatar},
+        url = {http://www.aclweb.org/anthology/D14-1179}
+}
+
+%deep averaging networks
+@inproceedings{dan,
+  author    = {Mohit Iyyer and
+               Varun Manjunatha and
+               Jordan L. Boyd{-}Graber and
+               Hal Daum{\'{e}} III},
+  title     = {Deep Unordered Composition Rivals Syntactic Methods for Text Classification},
+  booktitle = {Proceedings of the 53rd Annual Meeting of the Association for Computational
+               Linguistics and the 7th International Joint Conference on Natural
+               Language Processing of the Asian Federation of Natural Language Processing,
+               {ACL} 2015, July 26-31, 2015, Beijing, China, Volume 1: Long Papers},
+  pages     = {1681--1691},
+  year      = {2015},
+  crossref  = {DBLP:conf/acl/2015-1},
+  url       = {http://aclweb.org/anthology/P/P15/P15-1162.pdf},
+  timestamp = {Sun, 02 Aug 2015 19:10:39 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/acl/IyyerMBD15},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+%attention
+@incollection{attention,
+title = {Attention is All you Need},
+author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
+booktitle = {Advances in Neural Information Processing Systems 30},
+editor = {I. Guyon and U. V. Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+pages = {5998--6008},
+year = {2017},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf}
+}
+
