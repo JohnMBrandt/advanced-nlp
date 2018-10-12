@@ -17,11 +17,24 @@ word embeddings, character embeddings, word2vec, gloVe, CBOW, skip-gram, doc2vec
 
 \subsection{word2vec}
 
-This is a citation for word2vec \cite{word2vec}
+Word2vec \cite{word2vec} uses surrogate shallow neural networks to represent individual words as a dense vector. Word2vec can be implemented in two ways, either through the skipgram or continuous bag of words (CBOW) approaches. The skipgram approach uses a shallow neural network to predict the context of each input word. In contrast, CBOW predicts the word given its context. 
+
+In the skipgram case, word and context pairs are constructed for a given window size. For each input word in the vocabulary, a one-hot encoded vector serves as the input to the neural network. For each training sample, the conditional probability of observing the actual context word given the input word is maximized. The output are separate multinomial distributions representing the probability of each word being in the context of the input.
+
+Word2vec is considered a surrogate neural network because the output is discarded. Instead, the hidden layer weights serve as the vector representation of the input. Because the weights are dependent upon the context words, words appearing in similar contexts will have similar embeddings. Similarly, the embeddings learned through CBOW are dependent upon the context of each predicted word. CBOW tends to be faster to train than skipgram, while skipgram can be better for smaller training datasets.
 
 \subsection{gloVe}
 
-This is a citation for glove \cite{glove}
+While word2vec is predictive and optimizes a loss function with stochastic gradient descent, gloVe constructs dense vector representations of words through a count-based method that uses ordinary least squares objectives.
+
+\subsection{Limitations of word embeddings}
+
+Although word embeddings have revolutionized many fields in natural language processing, they are not without shortcomings. Word embeddings learn the bias and temporality of meanings inherent in their training dataset. The differences in word meanings  across time, documents, and sentences are not modelled with gloVe or word2vec. Instead, each word is assigned one single embedding despite words like "crane" or "amazon" having multiple meanings. 
+
+Word embeddings are often pre-trained on large corpuses of text, like Wikipedia or news articles, and then applied to domain-specific needs. 
+
+Out of vocabulary words and modeling sentences as sum of individual words. L2norm, cosine similarity.
+
 
 \subsection{Gated recurrent units}
 
@@ -34,6 +47,8 @@ Citation for DAN \cite{dan}
 \subsection{Self attention}
 
 Citation for attention \cite{attention}
+
+Attention is a 
 
 \section{\label{sec:level4} Presentation of papers}
 \subsection{Summary of Distributed Representations of Sentences and Documents}
