@@ -1,0 +1,18 @@
+% TODO make sure that each entry has a "url" which points directly to a pdf of the paper (and not a general page with links to the pdf etc.). 
+% TODO Also, for each entry add a "section" which is a ";"-separated list of section headers for all the headers which explain background information of the text, so mainly the introduction/related works section. By default, I just want you to include "Introduction" and "Related Work" in this part, but in some cases if you take a paper from a different venue, related work may be called "background," so I just want you to include this to make parsing easier. Also, I want you to include subsections within related work so we can parse those as well. 
+% TODO The first entries in the bib must be the main papers from the presentation. If you have more, separate those entries from the initial ones with a comment line that says  "The following papers are not the main papers." 
+% TODO include ONLY PAPERS and not HTML/PowerPoint Presentations for your main material! This is contradictory to what we had previously said on Piazza. If you want to include a picture/link from an online resource, you can include those, but please separate those bib entries from the paper entries by a comment line that says "The following entries are HTML pages."
+% So, your .bib file should be structured as follows:
+% Main papers
+% The following papers are not the main papers.
+% Other papers
+% The following entries are HTML pages.
+% HTML pages
+@inproceedings{Kipf:17,
+  title={Semi-Supervised Classification with Graph Convolutional Networks},
+  author={Kipf, Thomas N. and Welling, Max},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2017}, 
+  url= {https://arxiv.org/pdf/1609.02907.pdf},
+  section={Introduction;RELATED WORK;GRAPH-BASED SEMI-SUPERVISED LEARNING;NEURAL NETWORKS ON GRAPHS}
+}

@@ -1,0 +1,78 @@
+\documentclass[11p]{book}
+\usepackage[T1]{fontenc}
+\usepackage[style=numeric,hyperref]{biblatex}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[center]{subfigure}
+\usepackage{epsfig}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{draftwatermark}
+\usepackage{longtable}
+
+\bibliography{sample}
+\defbibheading{bibliography}{%
+  \section*{\refname}%
+  \markboth{\MakeUppercase{\refname}}{\MakeUppercase{\refname}}}
+
+\SetWatermarkFontSize{20cm}
+\SetWatermarkScale{3}
+\setcounter{topnumber}{40}
+\setcounter{dbltopnumber}{40}
+\setcounter{totalnumber}{80}
+\renewcommand{\topfraction}{0.999}
+\renewcommand{\dbltopfraction}{0.999}
+\renewcommand{\bottomfraction}{.999}
+\renewcommand{\textfraction}{0.001}
+\renewcommand{\floatpagefraction}{.85}
+\renewcommand{\dblfloatpagefraction}{.85}
+
+\providecommand{\tabularnewline}{\\}
+\SetWatermarkFontSize{20cm}
+\SetWatermarkScale{3}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\usepackage{fancyheadings}
+\title{Advanced NLP}
+\author{TBD}
+
+\begin{document}
+
+\maketitle
+
+\pagestyle{plain}
+
+\tableofcontents
+\setcounter{tocdepth}{3}
+
+
+\pagestyle{fancyplain}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\bfseries\thepage}]
+   {\fancyplain{}{\bfseries\rightmark}}
+\rhead[\fancyplain{}{\bfseries\leftmark}]
+   {\fancyplain{}{\bfseries\thepage}}
+\cfoot{}
+
+\pagestyle{fancyplain}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\lhead[\fancyplain{}{\bfseries\thepage}]
+   {\fancyplain{}{\bfseries\rightmark}}
+\rhead[\fancyplain{}{\bfseries\leftmark}]
+   {\fancyplain{}{\bfseries\thepage}}
+\cfoot{}
+
+\part{Topic Presentations}
+% TODO: please modify sample.tex. This is the file you will submit. 
+\include{sample}
+\printbibliography
+
+\end{document} 
