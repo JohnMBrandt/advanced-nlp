@@ -49,7 +49,7 @@ Gated recurrent units (GRUs) \cite{gru} are a gating method used in recurrent ne
 
 \subsection{Deep averaging network}
 
-The deep averaging network (DAN) \cite{dan} is a simple bag of words deep neural network that performs similarly to syntactically-aware models. DAN averages input word embeddings for a sequence, passes the average through feed-forward layers, and then linearly classifies the final layer's representation. In lieu of drop-out layers, DAN randomly drops a proportion of the input word embeddings before computing the average for each epoch. As figure X shows, DAN is a much simpler model than recurrent neural networks, with vastly fewer parameters and softmax computations. Despite this relative simplicity, DAN perform similarly to recurrent networks on sentiment classification and question answering. 
+The deep averaging network (DAN) \cite{dan} is a simple bag of words deep neural network that performs similarly to syntactically-aware models. DAN averages input word embeddings for a sequence, passes the average through feed-forward layers, and then linearly classifies the final layer's representation. In lieu of drop-out layers, DAN randomly drops a proportion of the input word embeddings before computing the average for each epoch. DAN is a much simpler model than recurrent neural networks, with vastly fewer parameters and softmax computations. Despite this relative simplicity, DAN perform similarly to recurrent networks on sentiment classification and question answering. 
 
 \subsection{Self attention}
 
@@ -226,85 +226,118 @@ Skip-thoughts is evaluated on five different classification datasets: movie revi
 \subsection{Summary of An Efficient Framework for Learning Sentence Representations}
 % TODO same as previous subsection
 
-Quick thoughts  \cite{logeswaran2018an} are unsupervised sentence representations that address a number of issues with previous sentence embeddings: the inability to model multiple ways of expressing ideas, sensitivity to sentence structure, and high computational costs. Rather than using a generative approach, quick thoughts uses a discriminative approximation to attempt to identify the embedding of a context sentences given a set of candidate sentences \ref{fig:quickthoughts-1}. The conceptual basis for this approach is that the topic or meaning of a sentence is encoded in the information that allows an embedding to predict the information about contextual sentences. 
+Quick thoughts  \cite{logeswaran2018an} are unsupervised sentence representations that address a number of issues with previous sentence embeddings: the inability to model multiple ways of expressing ideas, sensitivity to sentence structure, and high computational costs. Rather than using a generative approach, quick thoughts uses a discriminative approximation to attempt to identify the embedding of a context sentence given a set of candidate sentences (Figure \ref{fig:quickthoughts-1}). The conceptual basis for this approach is that the topic or meaning of a sentence is encoded in the information that allows an embedding to predict the information about contextual sentences. 
+
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=.8\linewidth]{files/quickthoughts-1.png}
+  \caption{Cap.}
+  \label{fig:quickthoughts-1}
+\end{figure}
+
+Given an input sentence, quick-thoughts calculates the probability that each candidate sentence is a context sentence within the input with the equation in Figure \ref{fig:quickthoughts-obj}. The authors construct minibatches of 400 contiguous sentences, where all the sentences constitute the candidate pool S\textsubscript{cand}, which contains one context and many non-context sentences. In \ref{fig:quickthoughts-prob}, $c$ is a scoring function that is empirically chosen as the inner product of $u$ and $v$ in order to force the encoder to not rely upon a heavily engineered scoring function. The functions $f$ and $g$ are recurrent neural networks with GRU activation and no shared parameters. The outputs of $f$ and $g$ are concatenated at test time. The objective of quick-thoughts is to maximize the sum of the log probability of correctly identifying the context sentence for all minibatches of all input sentences (Equation \ref{fig:quickthoughts-obj}).
+
 
 \begin{figure}[h!]
     \centering
     $$
     p(S_{cand}|s, S_{cand}) = \frac{exp[c(f(s),g(s_{cand}))]}{\sum exp[c(f(s),g(s'))]}
     $$
-    \caption{Objective for quick thoughts model.}
+    \caption{Probability function for quick-thoughts}
+    \label{fig:quickthoughts-prob}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    $$
+    \sum\limits_{s \in D} \sum\limits_{s_{ctxt} \in S_{ctxt}} log p(s_{ctxt} | s, S_{cand})
+    $$
+    \caption{Objective for quick-thoughts.}
     \label{fig:quickthoughts-obj}
 \end{figure}
 
+Quick-thoughts is trained on 7,000 novels in the BookCorpus dataset, containing 45 million sentences, as well as the UMBC corpus with 129 million sentences derived from 100 million web pages. The model was trained to predict the previous and next sentence by encoding the middle sentence, though it would be possible to choose a wider context window. The RNNs are single-layered with randomly initialized GRU weights and word embeddings randomly initialized from -0.1 to 0.1. The authors test multiple versions of quick-thoughts. Uni-QT uses uni-directional RNNs for $f$ and $g$, bi-QT concatenates the forward and backward RNNs for $f$ and $g$, and combine-QT concatenates the embeddings from uni-QT and bi-QT. Quick-thoughts is also trained using pre-trained word vectors, randomly initialized and learned word vectors, and a combination of pre-trained and learned word vectors referred to as MC-QT. 
+
+Quick-thoughts is evaluated on a number of classification tasks against bag-of-words, skip-thoughts, paragraph vectors, supervised methods, and task-specific supervised methods. Table \ref{fig:quickthoughts-res1} compares the performance of quick-thoughts with other unsupervised approaches. Combine-QT outperforms uni-QT and bi-QT on all tasks. Combining pre-trained and learned word vectors improves upon both the pre-trained and the learned word vectors models. Multichannel quick-thoughts improves upon the best skip-thoughts model on all tasks with just 8\% the training time (28 versus 336 hours). Quick-thoughts also performs competitively against supervised methods (Table \ref{fig:quickthoughts-res2}), improving upon the best baseline (InferSent) in six of eight cases despite not being supervised. An ensemble of weighted average predictions of models with variations in model type, embeddings, and training data performed competitively against task-specific supervised approaches (Figure \ref{fig:quickthoughts-res3}). Quick-thoughts performs better than previous pre-trained unsupervised methods on image annotation and image search, improving upon skip-thoughts by between between 2 and 4\% absolute accuracy, but fails to improve upon directly supervised models, performing between 8 and 22\% worse than the best baseline.
+
+The main contribution of this paper is that the quick-thoughts algorithm attains similar accuracy as task-specific models tuned end-to-end on many tasks. Quick-thoughts trains nearly five times as fast as skip-thoughts (6.5 hours and 31 hours, respectively) and has only 20 million parameters, versus the 58 million of skip-thoughts. Additionally, quick-thoughts can train high-quality low-dimensional models, as reducing the em bedding size from 5,600 to 1,600 only drops performance averaged over all classification benchmarks from 86.7\% to 84.6\%. 
+
+\newpage
 
 \begin{figure}[h!]
 \centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-1.png}
-  \caption{Cap.}
-  \label{fig:quickthoughts-1}
+  \includegraphics[width=1\linewidth]{files/quickthoughts-2.png}
+  \caption{Comparison of quick-thoughts with other unsupervised approaches on the movie reviews (MR), product reviews (CR), subjectivity (SUBJ, opinion polarity (MPQA), question type classification (TREC), paraphrase identification (MSRP), and semantic relatedness (SICK) tasks.}
+  \label{fig:quickthoughts-res1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-2.png}
-  \caption{Cap.}
-  \label{fig:vae}
+  \includegraphics[width=1\linewidth]{files/quickthoughts-3.png}
+  \caption{Caption XX}
+  \label{fig:quickthoughts-res2}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-3.png}
-  \caption{Cap.}
-  \label{fig:vae}
+  \includegraphics[width=1\linewidth]{files/quickthoughts-4.png}
+  \caption{Caption XX}
+  \label{fig:quickthoughts-res3}
 \end{figure}
 
-\begin{figure}
-\centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-4.png}
-  \caption{Cap.}
-  \label{fig:vae}
-\end{figure}
+%\begin{figure}
+%\centering
+% \includegraphics[width=.5\linewidth]{files/quickthoughts-5.png}
+%  \caption{Cap.}
+%  \label{fig:vae}
+%\end{figure}
 
-\begin{figure}
-\centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-5.png}
-  \caption{Cap.}
-  \label{fig:vae}
-\end{figure}
-
-\begin{figure}
-\centering
-  \includegraphics[width=.5\linewidth]{files/quickthoughts-6.png}
-  \caption{Cap.}
-  \label{fig:vae}
-\end{figure}
+%\begin{figure}
+%\centering
+%  \includegraphics[width=.5\linewidth]{files/quickthoughts-6.png}
+%  \caption{Cap.}
+%  \label{fig:vae}
+%\end{figure}
 
 \subsection{Summary of Universal Sentence Encoder}
 % TODO same as previous subsection
 
-Universal sentence encoder citation \cite{use}.
+Due to the scarcity of training data, many NLP tasks rely on transfer learning by using pre-trained word or sentence embeddings. The universal sentence encoder (USE) \cite{use} are sentence embeddings designed for transfer learning with a model structure that targets weaknesses in applying pre-trained embeddings to new tasks. USE can be implemented with a transformer architecture or with a deep averaging network. These variants are designed to allow trade-offs between computational efficiency and accuracy. 
 
-\begin{figure}
+The transformer-based architecture has high accuracy but greater computational requirements. Self-attention \cite{attention} is used to create sentence embeddings that account for word order and importance. The model uses multi-task learning to foster generalizability by updating a single encoder based on performance on a skip-thought-like task using the transformer in place of the LSTM, a conversational input-response task, and supervised classification. The deep averaging network (DAN) approach generates a sentence encoding using the architecture proposed by \cite{dan}, sacrificing accuracy for reduced compute time.
+
+USE is trained on a variety of web data, including Wikipedia, news, question-answer sites like Quara, and forums. This training set is supplemented with supervised data from the Stanford Natural Language Inference corpus. Transfer tasks for multi-task learning are tested with word-level transfer with pre-trained word2vec embeddings and with randomly initialized word embeddings that are learned for each task. Similarity for classification transfer tasks is calculated with angular distance rather than cosine similarity. Hyperparameters are tuned with cross-validation and Vizier. 
+
+The transformer architecture tends to outperform the DAN encoder, espsecially for tasks with limited training data sets (Figure \ref{fig:use-2}) and models with pre-trained word embeddings tend to outperform those that learn word embeddings for tasks with small training data sets. While the transformer architecture performs remarkably better on small training sets than does DAN, the transformer only increases accuracy by one or two relative percentage points when sufficient training data is available (Figure \ref{fig:use-1}.) 
+
+The compute time of the transformer is quadratically related to the sentence length and training size, while the compute time for the DAN architecture has a linear relationship. There is a similar relationship for memory usage. DAN is much less computationally intensive than the transformer architecture, and the authors suggest choosing between the approaches by considering the tradeoffs between memory, compute time, and accuracy. Ultimately, USE provides sentence embeddings that perform well when transferred to a variety of NLP tasks and allow the end-user to choose between accuracy and compute time.
+
+\newpage
+
+
+%\begin{figure}
+%\centering
+%  \includegraphics[width=1\linewidth]{files/use-1.png}
+%  \caption{Cap.}
+%  \label{fig:vae}
+%\end{figure}
+
+\begin{figure}[h!]
 \centering
-  \includegraphics[width=.5\linewidth]{files/use-1.png}
-  \caption{Cap.}
-  \label{fig:vae}
+  \includegraphics[width=1\linewidth]{files/use-2.png}
+  \caption{Caption 1.}
+  \label{fig:use-1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
-  \includegraphics[width=.5\linewidth]{files/use-2.png}
-  \caption{Cap.}
-  \label{fig:vae}
+  \includegraphics[width=1\linewidth]{files/use-3.png}
+  \caption{Caption 2.}
+  \label{fig:use-2}
 \end{figure}
 
-\begin{figure}
-\centering
-  \includegraphics[width=.5\linewidth]{files/use-3.png}
-  \caption{Cap.}
-  \label{fig:vae}
-\end{figure}
+\newpage
 
 \section{\label{sec:level5} Comparison of Papers}
 % TODO Give a short overview/comparison of the methods discussed in the papers
